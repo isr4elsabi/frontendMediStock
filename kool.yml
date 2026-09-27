@@ -1,0 +1,9 @@
+scripts:
+  quasar: kool exec frontend npx quasar
+  npm: kool exec frontend npm
+
+  setup:
+    - kool start
+
+  logs:
+    - kool logs frontend

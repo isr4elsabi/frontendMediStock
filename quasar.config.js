@@ -11,7 +11,7 @@ export default defineConfig((/* ctx */) => {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: [],
+    boot: ['axios'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
     css: ['app.scss'],
@@ -49,7 +49,12 @@ export default defineConfig((/* ctx */) => {
       // minify: false,
       // distDir
 
-      // extendViteConf (viteConf) {},
+      extendViteConf (viteConf) {
+        viteConf.server = viteConf.server || {}
+        viteConf.server.watch = {
+          usePolling: true
+        }
+      },
       // viteVuePluginOptions: {},
 
       // to write components with JSX/TSX:
@@ -72,9 +77,18 @@ export default defineConfig((/* ctx */) => {
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#devserver
     devServer: {
-      // vueDevtools: true,
-      // https: true,
-      open: true, // opens browser window automatically
+      server: {
+        type: 'http',
+      },
+      port: 8080,
+      host: '0.0.0.0',
+      open: false,
+      proxy: {
+        '/api': {
+          target: process.env.VITE_BACKEND_URL || 'http://nginx:8000',
+          changeOrigin: true,
+        },
+      },
     },
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#framework
@@ -93,6 +107,10 @@ export default defineConfig((/* ctx */) => {
 
       // Quasar plugins
       plugins: [],
+      config: {
+        dark: 'auto',
+        backendUrl: 'http://127.0.0.1:8000',
+      },
     },
 
     // animations: 'all', // --- includes all animations
