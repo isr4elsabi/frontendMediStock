@@ -11,12 +11,11 @@ services:
     environment:
       - VITE_BACKEND_URL=http://backend:8000
     networks:
-      - medistock-shared
+      - medistock-red-global
 
 volumes:
   node_modules:
 
 networks:
-  medistock-shared:
+  medistock-red-global:
     external: true
-    name: backendmedistock_medistock-shared

@@ -3,6 +3,7 @@ scripts:
   npm: kool exec frontend npm
 
   setup:
+    - sh -c "docker network create medistock-red-global || true"
     - kool start
 
   logs:
